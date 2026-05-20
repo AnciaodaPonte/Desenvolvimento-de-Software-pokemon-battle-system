@@ -14,8 +14,6 @@ public class BattleMenu {
     private final BattleSystem battleSystem = new BattleSystem();
     private final Scanner scanner = new Scanner(System.in);
 
-    // ================= MENU PRINCIPAL =================
-
     public void start() {
 
         while (true) {
@@ -40,34 +38,26 @@ public class BattleMenu {
         }
     }
 
-    // ================= BUILD PLAYER TEAM =================
-
     private void buildPlayerTeam() {
 
         player.getTeam().clear();
 
         System.out.println("\n===== POKEMON DATABASE =====");
-        showAllPokemons(); // MOSTRA UMA VEZ SÓ
+        showAllPokemons();
 
         for (int i = 0; i < 6; i++) {
 
             System.out.println("\nChoose pokemon " + (i + 1) + ":");
 
-            int index = readOption(
-                    0,
-                    PokemonDatabase.POKEMONS.length - 1
-            );
+            int index = readOption(0, PokemonDatabase.POKEMONS.length - 1);
 
-            Pokemon pokemon =
-                    PokemonFactory.createPokemon(index);
+            Pokemon pokemon = PokemonFactory.createPokemon(index);
 
             player.addPokemon(pokemon);
         }
 
         System.out.println("\nTeam created successfully!");
     }
-
-    // ================= BATTLE =================
 
     private void chooseBattle() {
 
@@ -82,8 +72,6 @@ public class BattleMenu {
         battleSystem.startBattle(player, enemy);
     }
 
-    // ================= ENEMY TEAM MODE =================
-
     private void prepareEnemyTeam() {
 
         enemy.getTeam().clear();
@@ -97,51 +85,36 @@ public class BattleMenu {
         if (option == 1) {
 
             System.out.println("\n===== POKEMON DATABASE =====");
-            showAllPokemons(); // MOSTRA UMA VEZ SÓ
+            showAllPokemons();
 
             for (int i = 0; i < 6; i++) {
 
-                System.out.println(
-                        "\nChoose pokemon " + (i + 1) + " for enemy:"
-                );
+                System.out.println("\nChoose pokemon " + (i + 1) + " for enemy:");
 
-                int index = readOption(
-                        0,
-                        PokemonDatabase.POKEMONS.length - 1
-                );
+                int index = readOption(0, PokemonDatabase.POKEMONS.length - 1);
 
-                enemy.addPokemon(
-                        PokemonFactory.createPokemon(index)
-                );
+                enemy.addPokemon(PokemonFactory.createPokemon(index));
             }
-
         } else {
 
             Random random = new Random();
 
             for (int i = 0; i < 6; i++) {
 
-                int index = random.nextInt(
-                        PokemonDatabase.POKEMONS.length
-                );
+                int index = random.nextInt(PokemonDatabase.POKEMONS.length);
 
-                enemy.addPokemon(
-                        PokemonFactory.createPokemon(index)
-                );
+                enemy.addPokemon(PokemonFactory.createPokemon(index));
             }
-
             System.out.println("\nEnemy team generated randomly!");
         }
     }
-
-    // ================= UTIL =================
 
     private void showAllPokemons() {
 
         for (int i = 0; i < PokemonDatabase.POKEMONS.length; i++) {
 
             Pokemon pokemon = PokemonFactory.createPokemon(i);
-            pokemon.showSummary(); // formato bonito que você criou
+            pokemon.showSummary();
         }
     }
 
