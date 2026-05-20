@@ -31,15 +31,13 @@ public class BattleSystem {
 
             int option = readOption(1, 2);
 
-            // ================= PLAYER TURN =================
-
             if (option == 1) {
 
                 player.showMoves();
                 int moveIndex = readOption(0, 3);
                 player.useMove(moveIndex, enemy);
-
-            } else {
+            }
+            else {
 
                 Pokemon newPokemon = playerTrainer.choosePokemon(scanner);
 
@@ -47,19 +45,14 @@ public class BattleSystem {
                     player = newPokemon;
                     System.out.println("Go " + player.getName() + "!");
                 }
-
-                continue; // trocar não gera ataque do inimigo
+                continue;
             }
-
-            // ================= ENEMY TURN =================
-
+            
             if (!enemy.isFainted()) {
 
                 int enemyMove = random.nextInt(4);
                 enemy.useMove(enemyMove, player);
             }
-
-            // ================= CHECK PLAYER FAINT =================
 
             if (player.isFainted()) {
 
@@ -71,8 +64,6 @@ public class BattleSystem {
                     System.out.println("Go " + player.getName() + "!");
                 }
             }
-
-            // ================= CHECK ENEMY FAINT =================
 
             if (enemy.isFainted()) {
 
@@ -86,11 +77,10 @@ public class BattleSystem {
             }
         }
 
-        // ================= RESULT =================
-
         if (player == null) {
             System.out.println("\nYou lost the battle!");
-        } else {
+        }
+        else {
             System.out.println("\nYou won the battle!");
         }
     }
@@ -107,7 +97,8 @@ public class BattleSystem {
                 if (option >= min && option <= max) {
                     return option;
                 }
-            } else {
+            }
+            else {
                 scanner.next();
             }
 
