@@ -23,6 +23,28 @@ class PokemonTest {
         );
     }
 
+    private DefaultPokemon crearPokemonPorTipo(
+            String nombre,
+            MoveType tipo,
+            int hp,
+            int attack,
+            int defense
+    ) {
+        return new DefaultPokemon(
+                1,
+                nombre,
+                tipo,
+                null,
+                300,
+                hp,
+                attack,
+                defense,
+                40,
+                0,
+                60
+        );
+    }
+
     @Test
     void recibirDanoFisicoDebeReducirElHpCorrectamente() {
         DefaultPokemon pokemon = crearPokemonDePrueba(100, 10);
@@ -82,5 +104,53 @@ class PokemonTest {
                 () -> assertEquals(defensaEspecialInicial, pokemon.getSpDefense()),
                 () -> assertEquals(velocidadInicial, pokemon.getSpeed())
         );
+    }
+
+    @Test
+    void ataqueDeFuegoContraPlantaDebeSerSuperEfectivo() {
+        DefaultPokemon atacante =
+                crearPokemonPorTipo("Charmander", MoveType.FIRE, 500, 50, 0);
+        DefaultPokemon objetivo =
+                crearPokemonPorTipo("Bulbasaur", MoveType.GRASS, 500, 50, 0);
+
+        atacante.useMove(1, objetivo);
+
+        assertEquals(300, objetivo.getHp());
+    }
+
+    @Test
+    void ataqueDeFuegoContraAguaDebeSerPocoEfectivo() {
+        DefaultPokemon atacante =
+                crearPokemonPorTipo("Charmander", MoveType.FIRE, 500, 50, 0);
+        DefaultPokemon objetivo =
+                crearPokemonPorTipo("Squirtle", MoveType.WATER, 500, 50, 0);
+
+        atacante.useMove(1, objetivo);
+
+        assertEquals(450, objetivo.getHp());
+    }
+
+    @Test
+    void ataqueDeFuegoContraTipoNormalDebeMantenerDanoNeutro() {
+        DefaultPokemon atacante =
+                crearPokemonPorTipo("Charmander", MoveType.FIRE, 500, 50, 0);
+        DefaultPokemon objetivo =
+                crearPokemonPorTipo("Eevee", MoveType.NORMAL, 500, 50, 0);
+
+        atacante.useMove(1, objetivo);
+
+        assertEquals(400, objetivo.getHp());
+    }
+
+    @Test
+    void ataqueElectricoContraTierraNoDebeCausarDano() {
+        DefaultPokemon atacante =
+                crearPokemonPorTipo("Pikachu", MoveType.ELECTRIC, 500, 50, 0);
+        DefaultPokemon objetivo =
+                crearPokemonPorTipo("Sandshrew", MoveType.GROUND, 500, 50, 0);
+
+        atacante.useMove(1, objetivo);
+
+        assertEquals(500, objetivo.getHp());
     }
 }
