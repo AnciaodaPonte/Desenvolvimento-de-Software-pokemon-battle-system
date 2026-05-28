@@ -153,4 +153,34 @@ class PokemonTest {
 
         assertEquals(500, objetivo.getHp());
     }
+
+    @Test
+    void ataqueCompletoSoloDebeModificarElHpDelObjetivo() {
+        DefaultPokemon atacante =
+                crearPokemonPorTipo("Charmander", MoveType.FIRE, 500, 50, 0);
+        DefaultPokemon objetivo =
+                crearPokemonPorTipo("Eevee", MoveType.NORMAL, 500, 50, 0);
+
+        int hpInicialAtacante = atacante.getHp();
+
+        MoveType tipoInicialObjetivo = objetivo.getType1();
+        int ataqueInicialObjetivo = objetivo.getAttack();
+        int defensaInicialObjetivo = objetivo.getDefense();
+        int ataqueEspecialInicialObjetivo = objetivo.getSpAttack();
+        int defensaEspecialInicialObjetivo = objetivo.getSpDefense();
+        int velocidadInicialObjetivo = objetivo.getSpeed();
+
+        atacante.useMove(1, objetivo);
+
+        assertAll(
+                () -> assertEquals(hpInicialAtacante, atacante.getHp()),
+                () -> assertEquals(400, objetivo.getHp()),
+                () -> assertEquals(tipoInicialObjetivo, objetivo.getType1()),
+                () -> assertEquals(ataqueInicialObjetivo, objetivo.getAttack()),
+                () -> assertEquals(defensaInicialObjetivo, objetivo.getDefense()),
+                () -> assertEquals(ataqueEspecialInicialObjetivo, objetivo.getSpAttack()),
+                () -> assertEquals(defensaEspecialInicialObjetivo, objetivo.getSpDefense()),
+                () -> assertEquals(velocidadInicialObjetivo, objetivo.getSpeed())
+        );
+    }
 }
