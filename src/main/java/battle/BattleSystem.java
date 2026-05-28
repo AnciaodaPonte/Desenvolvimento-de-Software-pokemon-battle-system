@@ -9,13 +9,11 @@ import java.util.Scanner;
 public class BattleSystem {
 
     private final Scanner scanner = new Scanner(System.in);
-
     private final Random random = new Random();
 
     public void startBattle(Trainer playerTrainer, Trainer enemyTrainer) {
 
         Pokemon player = playerTrainer.getFirstAlivePokemon();
-
         Pokemon enemy = enemyTrainer.getFirstAlivePokemon();
 
         System.out.println("\n===== BATTLE START =====");
@@ -23,17 +21,12 @@ public class BattleSystem {
         while (player != null && enemy != null) {
 
             System.out.println("\n====================");
-
             System.out.println(player.getName() + " VS " + enemy.getName());
-
             System.out.println("====================");
-
             System.out.println(player.getName() + " HP: " + player.getHp());
-
             System.out.println(enemy.getName() + " HP: " + enemy.getHp());
 
             System.out.println("\n1 - Attack");
-
             System.out.println("2 - Switch Pokemon");
 
             int option = readOption(1, 2);
@@ -45,7 +38,6 @@ public class BattleSystem {
                 if (newPokemon != null && !newPokemon.isFainted()) {
 
                     player = newPokemon;
-
                     System.out.println("Go " + player.getName() + "!");
                 }
 
@@ -56,22 +48,7 @@ public class BattleSystem {
 
             int playerMove = readOption(0, 3);
 
-            boolean playerFirst;
-
-            if (player.getSpeed() > enemy.getSpeed()) {
-
-                playerFirst = true;
-            }
-
-            else if (enemy.getSpeed() > player.getSpeed()) {
-
-                playerFirst = false;
-            }
-
-            else {
-
-                playerFirst = random.nextBoolean();
-            }
+            boolean playerFirst = playerAttacksFirst(player, enemy);
 
             if (playerFirst) {
 
@@ -80,15 +57,11 @@ public class BattleSystem {
                 if (!enemy.isFainted()) {
 
                     int enemyMove = random.nextInt(4);
-
                     enemy.useMove(enemyMove, player);
                 }
-            }
-
-            else {
+            } else {
 
                 int enemyMove = random.nextInt(4);
-
                 enemy.useMove(enemyMove, player);
 
                 if (!player.isFainted()) {
@@ -125,11 +98,14 @@ public class BattleSystem {
         if (player == null) {
 
             System.out.println("\nYou lost the battle!");
-        }
-        else {
+        } else {
 
             System.out.println("\nYou won the battle!");
         }
+    }
+
+    boolean playerAttacksFirst(Pokemon player, Pokemon enemy) {
+        return player.getSpeed() >= enemy.getSpeed();
     }
 
     private int readOption(int min, int max) {
@@ -148,8 +124,7 @@ public class BattleSystem {
 
                     return option;
                 }
-            }
-            else {
+            } else {
 
                 scanner.next();
             }
