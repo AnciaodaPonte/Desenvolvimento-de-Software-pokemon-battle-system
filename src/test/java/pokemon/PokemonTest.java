@@ -59,4 +59,28 @@ class PokemonTest {
 
         assertEquals(100, pokemon.getHp());
     }
+
+    @Test
+    void recibirDanoSoloDebeModificarElHp() {
+        DefaultPokemon pokemon = crearPokemonDePrueba(100, 10);
+
+        MoveType tipoInicial = pokemon.getType1();
+        int ataqueInicial = pokemon.getAttack();
+        int defensaInicial = pokemon.getDefense();
+        int ataqueEspecialInicial = pokemon.getSpAttack();
+        int defensaEspecialInicial = pokemon.getSpDefense();
+        int velocidadInicial = pokemon.getSpeed();
+
+        pokemon.receiveDamage(30);
+
+        assertAll(
+                () -> assertEquals(80, pokemon.getHp()),
+                () -> assertEquals(tipoInicial, pokemon.getType1()),
+                () -> assertEquals(ataqueInicial, pokemon.getAttack()),
+                () -> assertEquals(defensaInicial, pokemon.getDefense()),
+                () -> assertEquals(ataqueEspecialInicial, pokemon.getSpAttack()),
+                () -> assertEquals(defensaEspecialInicial, pokemon.getSpDefense()),
+                () -> assertEquals(velocidadInicial, pokemon.getSpeed())
+        );
+    }
 }
