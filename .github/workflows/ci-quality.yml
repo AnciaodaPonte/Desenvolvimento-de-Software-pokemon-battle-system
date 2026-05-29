@@ -41,3 +41,8 @@ jobs:
         else
           echo "WARNING: No se encontro el archivo de reporte de JaCoCo."
         fi
+  - name: Upload JaCoCo Coverage Report as Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: jacoco-report
+        path: target/site/jacoco/
