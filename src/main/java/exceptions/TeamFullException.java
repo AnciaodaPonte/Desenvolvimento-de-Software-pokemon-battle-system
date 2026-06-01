@@ -7,3 +7,11 @@ public class TeamFullException extends Exception {
         super(message);
     }
 }
+
+//Object
+//   │
+//Throwable
+//   │
+//Exception
+//   │
+//TeamFullException
