@@ -194,7 +194,7 @@ public class BattleMenu {
 
         try {
 
-            int numb = 1/0;
+            //int numb = 1/0;
             player.addPokemon(PokemonFactory.createPokemon(index));
         }
         catch (TeamFullException e) {
