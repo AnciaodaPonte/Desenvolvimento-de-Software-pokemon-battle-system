@@ -1,0 +1,29 @@
+name: Reporte de Jacoco Automático en Java Maven CI
+
+on:
+  pull_request:
+    branches: [ "main","master" ]
+
+jobs:
+  build-and-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Descargar codigo
+      uses: actions/checkout@v4
+     
+    - name: Configurar JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+    - name: Test con JaCoCo
+      run: mvn clean test jacoco:report
+
+    - name: Subir Reporte
+      uses: actions/upload-artifact@v4
+      with:
+        name: jacoco-report
+        path: target/site/jacoco/
