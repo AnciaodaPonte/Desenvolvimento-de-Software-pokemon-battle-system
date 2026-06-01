@@ -1,5 +1,6 @@
 package trainer;
 
+import exceptions.TeamFullException;
 import pokemon.Pokemon;
 
 import java.util.ArrayList;
@@ -14,11 +15,13 @@ public class Trainer {
         this.name = name;
     }
 
-    public void addPokemon(Pokemon pokemon) {
+    public void addPokemon(Pokemon pokemon) throws TeamFullException {
 
         if (team.size() >= 6) {
-            System.out.println("Team is full!");
-            return;
+
+            throw new TeamFullException(
+                    "Your team already has 6 Pokemons!"
+            );
         }
 
         if (team.contains(pokemon)) {
@@ -28,6 +31,7 @@ public class Trainer {
 
         team.add(pokemon);
         System.out.println(pokemon.getName() + " added to team!");
+        System.out.println("Current team size: " + team.size());
     }
 
     public void removePokemon(int index) {
