@@ -1,65 +1,33 @@
-# Análisis inicial de calidad - Sistema Pokémon
+## Reporte de cobertura con JaCoCo
 
-## Estado inicial del proyecto
+Se ejecutó el comando:
 
-El proyecto fue clonado y ejecutado localmente utilizando Java 21 y Maven 3.9.16.
+`mvn clean verify`
 
-Resultado inicial:
+El proyecto compiló correctamente y se generó el reporte de cobertura con JaCoCo.
 
-- Compilación del proyecto: BUILD SUCCESS.
-- El sistema original no cuenta inicialmente con pruebas unitarias.
+### Resultados obtenidos
 
-## Clases principales analizadas
+- Instruction coverage total: 39 %.
+- Branch coverage total: 19 %.
+- Líneas totales: 490.
+- Líneas no cubiertas: 237.
+- Líneas cubiertas: 253.
+- Line coverage calculado: 51.6 % aproximadamente.
 
-### Pokemon.java
+### Interpretación
 
-La clase `Pokemon` administra:
+La cobertura obtenida no alcanza el 85 %, debido a que las pruebas implementadas se limitaron a las reglas de negocio solicitadas para la actividad.
 
-- Puntos de vida actuales (`currentHp`).
-- Ataque y defensa física.
-- Ataque y defensa especial.
-- Velocidad.
-- Tipos del Pokémon.
-- Movimientos disponibles.
-- Aplicación de daño.
+No se agregaron pruebas adicionales para cubrir clases como `Trainer`, `BattleMenu`, `PokemonFactory` o `Main`, ya que el objetivo fue validar comportamientos críticos del sistema Pokémon y no aumentar cobertura artificialmente.
+
+Las pruebas unitarias se enfocaron en:
+
+- Orden de turnos según velocidad.
+- Cálculo correcto del daño.
+- Prevención de HP negativo.
+- Efectividad por tipo.
 - Condición de derrota.
+- Conservación de atributos durante un ataque.
 
-Se identificó que `currentHp` puede cambiar durante la batalla, mientras que atributos como tipo, ataque, defensa y velocidad están declarados como `final`.
-
-### BattleSystem.java
-
-La clase `BattleSystem` administra:
-
-- Inicio y desarrollo del combate.
-- Elección de movimientos.
-- Orden de ataque según velocidad.
-- Reemplazo de Pokémon derrotados.
-- Identificación del ganador.
-
-## Reglas de negocio analizadas
-
-1. El Pokémon con mayor velocidad debe atacar primero.
-2. El daño debe reducir correctamente el HP sin generar valores negativos.
-3. La efectividad por tipo debe modificar el daño causado.
-4. Un Pokémon queda derrotado cuando su HP llega a cero.
-5. Durante un ataque solamente deben modificarse los puntos de vida.
-
-## Hallazgo inicial
-
-En `BattleSystem.java`, cuando dos Pokémon tienen la misma velocidad, se utiliza:
-
-`random.nextBoolean()`
-
-para decidir cuál ataca primero.
-
-Sin embargo, la regla de negocio establece que, en caso de empate de velocidad, el sistema debe mantener un orden consistente y no aleatorio.
-
-## Riesgo identificado
-
-Este comportamiento puede generar resultados diferentes en batallas iguales, provocando una lógica de turnos inconsistente e injusta.
-
-## Decisión de pruebas
-
-Primero se probarán las reglas relacionadas con daño, vida y derrota, debido a que son comportamientos directos y verificables en la clase `Pokemon`.
-
-Posteriormente se probarán la efectividad por tipo y el orden de turnos, incluyendo el caso de empate de velocidad que presenta un posible incumplimiento de la regla de negocio.
+Este resultado demuestra que una cobertura baja no significa necesariamente que las pruebas sean inútiles; significa que el alcance probado fue específico. La cobertura debe interpretarse junto con las reglas de negocio y los riesgos funcionales analizados.
